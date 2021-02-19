@@ -1,0 +1,93 @@
+{% load currency_filters %}
+{% load category_tags %}
+{% load i18n %}
+
+<div class="primary-bg header-bottom">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                <div class="cate-lst primary-bg">
+                    <a href="/catalogue"><i class="ti-list"></i> All Products </a>
+                </div>
+{#                <div id="menu" class="d-none d-md-block">#}
+{#                    <ul class=" parent-menu mb-0 {% if request.path == "/" %}{% else %}single-page-category-list{% endif %}" {% if request.path != "/" %} style="display:none" {% endif %} style="display:none">#}
+{#                        {% category_tree as tree_categories %}#}
+{#                        {% if tree_categories %}#}
+{#                            {% for tree_category, info in tree_categories %}#}
+{#                                <li {% if info.has_children %} class="submenu" {% endif %}>#}
+{#                                    <a href="{{ tree_category.get_absolute_url }}"> {{ tree_category.name|safe }} </a>#}
+{#                                    {% if info.has_children %}#}
+{#                                    <ul class="sub-second">{% else %} {% endif %}#}
+{#                                        {% for n in info.num_to_close %}#}
+{#                                    </ul>#}
+{#                                </li>#}
+{#                                {% endfor %}#}
+{#                            {% endfor %}#}
+{#                        {% endif %}#}
+{#                    </ul>#}
+{#                </div>#}
+{##}
+{##}
+{#                <nav class="sidenav d-md-none d-lg-none d-block" data-sidenav data-sidenav-toggle="#sidenav-toggle">#}
+{#                    <div class="sidenav-brand accent-bg">#}
+{#                        <h4>All Categories</h4>#}
+{#                    </div>#}
+{#                    <ul class="sidenav-menu">#}
+{#                        {% category_tree as tree_categories %}#}
+{#                        {% if tree_categories %}#}
+{#                            {% for tree_category, info in tree_categories %}#}
+{#                                <li {% if info.has_children %}class="left-offcanvas-submenu" {% else %}{% if info.level == 0 %} {% else %}{% endif %}{% endif %}>#}
+{#                                    {% if info.has_children %}{% endif %}#}
+{#                                    <a href="{{ tree_category.get_absolute_url }}"#}
+{#                                       {% if info.has_children %}data-sidenav-dropdown-toggle{% endif %}>#}
+{#                                        {% if tree_category.pk == category.pk %}#}
+{#                                            <span class="sidenav-link-title">{{ tree_category.name|safe }}</span>#}
+{#                                        {% else %}#}
+{#                                            {% if info.has_children %}#}
+{#                                                <span class="sidenav-link-title">{{ tree_category.name|safe }}</span>#}
+{#                                            {% else %}#}
+{#                                                <span class="sidenav-link-title">{{ tree_category.name|safe }}</span>#}
+{#                                            {% endif %}#}
+{#                                        {% endif %}#}
+{#                                    </a>#}
+{#                                    {% if info.has_children %}#}
+{#                                    {% endif %}#}
+{#                                    {% if info.has_children %}{% endif %}#}
+{#                                    {% if info.has_children %}#}
+{#                                    <ul class="sidenav-dropdown" data-sidenav-dropdown>{% else %}#}
+{#                                        {% endif %}#}
+{#                                        {% for n in info.num_to_close %}#}
+{#                                    </ul>#}
+{#                                </li>#}
+{#                                {% endfor %}#}
+{#                            {% endfor %}#}
+{#                        {% endif %}#}
+{#                    </ul>#}
+{#                </nav>#}
+            </div>
+            <div class="col-md-6">
+                <div class="search-form-custom">
+                    {% include "partials/search.html" %}
+                </div>
+            </div>
+            <div class="col-md-3 text-right">
+                <div class="basket-mini justify-content-center">
+                    <ul class="navbar-nav basket-nav">
+                        <li class="nav-item">
+                            <a href="{% url 'basket:summary' %}" class="nav-link">
+                                <strong>
+                                <i class="ti-shopping-cart"></i> {% trans "My Cart:" %}
+                                {% if request.basket.is_tax_known %}
+                                    {{ request.basket.total_incl_tax|currency:request.basket.currency }}
+                                {% else %}
+                                    {{ request.basket.total_excl_tax|currency:request.basket.currency }}
+                                {% endif %}
+                                </strong>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+{% load reviews_tags %}
+{% load thumbnail %}
+{% load i18n %}
+{% load display_tags %}
+{% load staticfiles %}
+
+{% block product %}
+    <div class="product-style-2 mb-4">
+        <article class="bg--custom">
+            {% block product_image %}
+               {% with all_images=product.images.all %}
+                    {% if all_images|length > 0 %}
+                        <div class="product-image">
+                            {% for image in all_images %}
+                                {% if forloop.counter0 < 1 %}
+                                    {% thumbnail image.original "600x600" upscale=False as thumb %}
+                                        <img src="{{ thumb.url }}" alt="{{ product.get_title }}"
+                                             class="img-fluid p-3 {% cycle 'primary-img' 'hover-image' %}"/>
+                                    {% endthumbnail %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            {% endblock %}
+
+            <div class="product-info">
+                <!-- Content -->
+                {% block product_title %}
+                    <h5 class="tittle">
+                        <a href="{{ product.get_absolute_url }}"
+                           title="{{ product.get_title }}">{{ product.get_title }}</a>
+                        <br>
+                    <span>{{ category.name }}</span>
+                    </h5>
+                {% endblock %}
+
+                <!-- Reviews -->
+
+
+                <div class="price-cart-block p-3">
+                    <div class="align-items-center">
+                        {% block product_price %}
+                            <div class="price">
+                                {% include "catalogue/partials/stock_record.html" %}
+                            </div><!-- End .price-box -->
+                        {% endblock %}
+
+                    </div>
+                    {% if not product.is_parent %}
+                        <div class="group-btn-hover w-100">
+                            <a href="{{ product.get_absolute_url }}" class="quick-view view-details-btn secondary-btn btn mr-0" data-toggle="tooltip" data-placement="top"
+                               title="View Details"> View Details
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+
+        </article>
+    </div>
+{% endblock %}

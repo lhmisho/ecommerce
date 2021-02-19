@@ -1,0 +1,45 @@
+{% load hyper_tags %}
+<div id={{obj.id}} class="{{obj.general.classes}} loc-container">
+    <div class="row ">
+    {% for locations in obj.settings.items %}
+        <div class="col-md-4 col-sm-12 col-xs-12 loc-wrapper">
+            <div class="card">
+
+            
+                {% if locations.title %}
+                <div class="card-title text-center pt-3">
+                    <!-- <h1> Tire Dealer</h1> --> <h1>{{locations.title}}</h1>
+                </div>
+                {% endif %}
+
+                {% if locations.map_address%}
+                <div class="card-address ">
+                    <p> <strong>Address: </strong> {{locations.map_address}} </p>
+                </div>
+                {% endif %}
+
+                {% if locations.cell_number %}
+                <div class="card-phone">
+                   <p class="p-position"> <strong>Mobile: </strong> {{locations.cell_number}} </p>
+                </div>
+                {% endif %}
+
+                {% if locations.land_number%}
+                <div class="card-land">
+                   <p> <strong>Phone: </strong> {{locations.land_number}} </p>
+                </div>
+                {% endif %}
+
+                {% if locations.map_link%}
+                <div class="card-map">
+                        <iframe src="{{locations.map_link}}" width="337" height="150" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
+
+                {% endif %}
+            
+            </div>
+        </div>
+    {% endfor %}
+        
+    </div>
+</div>

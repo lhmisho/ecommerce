@@ -1,0 +1,26 @@
+<div class="contentBoxWrap action-help" id="{{ obj.id }}">
+    <div class="row">
+        <div class="col-12 col-md-12 col-sm-12">
+            <img src="{{ obj.settings.image.url }}" class="img-fluid {% if obj.general.classes %} {{ obj.general.classes }} {% endif %}" id="{{ obj.id }}"/>
+        </div>
+        <div class="col col-md-12 pt-2">
+            <div class="text-wrap" > 
+                {% if obj.settings.title %}
+                <div class="title">
+                    <h2 class="pb-2">{{ obj.settings.title }} </h2>
+                </div>
+                {% endif %}
+                {% if obj.settings.description %}
+                <div class="desc">  
+                    {{ obj.settings.description|safe }}
+                </div>
+                {%endif%}
+            </div>
+            <div class="custom-button">
+                <a href="{{ obj.settings.actionUrl }}" class="btn btn-large secondary-btn"> 
+                    {{ obj.settings.actionTitle }} 
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

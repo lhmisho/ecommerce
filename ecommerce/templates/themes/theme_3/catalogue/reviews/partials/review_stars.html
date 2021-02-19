@@ -1,0 +1,32 @@
+{% load reviews_tags %}
+{% load i18n %}
+
+{% if product.rating != None %}
+    <p class="mb-0 star-rating {{ product.rating|as_stars }}">
+        <span>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+        </span>
+
+        <small>
+            <a href="#customer-review">
+                {% blocktrans count product.num_approved_reviews as num_reviews %}
+                    {{ num_reviews }} Review
+                {% plural %}
+                    {{ num_reviews }} Reviews
+                {% endblocktrans %}
+            </a>
+        </small>
+    </p>
+{% endif %}
+
+{% if product|is_review_permitted:user %}
+    <span class="mb-0 text-center new-rating"><a id="write_review"
+            class="d-block accent-color" href="{% url 'catalogue:reviews-add' product_slug=product.slug product_pk=product.id %}#addreview">
+            {% trans "Write a review" %}
+        </a></span>
+{% endif %}
+

@@ -1,0 +1,53 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load static %}
+{% load currency_filters %}
+{% load basket_tags %}
+
+<!--start header section-->
+<div class="container">
+    <div class="row py-4 align-items-center">
+        <div class="col-md-3 nav-left">
+            {% if config.logo %}
+                <a class="navbar-brand" href="/"><img src="/media/{{ config.logo }}" alt="logo" class="img-fluid"></a>
+            {% endif %}
+        </div>
+        <div class="col-md-7 nav-middle">
+            {% include "partials/search.html" %}
+        </div>
+        <div class="col-md-2 nav-right text-center">
+             <a href="#test-form" class="popup-with-form d-block d-md-none search-hidden"><span class="ti-search"></span></a>
+
+            <!-- form itself -->
+            <div id="test-form" class="white-popup-block mfp-hide">
+                <h4>Search</h4>
+                {% include "partials/search.html" %}
+            </div>
+
+            <div class="block-minicart dropdown">
+                <a class="minicart" href="{% url 'basket:summary' %}">
+                    <span class="counter qty">
+                        <span class="cart-icon"><i class="ti-shopping-cart"></i></span>
+                        <span class="counter-number">
+                            {% if request.basket.is_tax_known %}
+                                {{ request.basket.num_items }}
+                            {% else %}
+                                {{ request.basket.num_items }}
+                            {% endif %}
+                        </span>
+                    </span>
+                    <span class="counter-your-cart">
+                        <span class="counter-label">Your Cart:</span>
+                        <span class="counter-price">
+                            {% if request.basket.is_tax_known %}
+                                <span class="total-cart">{{ request.basket.total_incl_tax|currency:request.basket.currency }}</span>
+                            {% else %}
+                                <span class="total-cart"> {{ request.basket.total_excl_tax|currency:request.basket.currency }}</span>
+                            {% endif %}
+                        </span>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

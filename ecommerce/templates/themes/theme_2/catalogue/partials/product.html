@@ -1,0 +1,73 @@
+{% load reviews_tags %}
+{% load thumbnail %}
+{% load i18n %}
+{% load display_tags %}
+{% load staticfiles %}
+
+{% block product %}
+
+    <div class="product mb-4">
+        <article class="bg-white">
+            {% block product_image %}
+               {% with all_images=product.images.all %}
+                    {% if all_images|length > 0 %}
+                        <a href="{{ product.get_absolute_url }}" class="product-image">
+                            {% for image in all_images %}
+                                {% if forloop.counter0 < 2 %}
+                                    {% thumbnail image.original "600x600" upscale=False as thumb %}
+                                        <img src="{{ thumb.url }}" alt="{{ product.get_title }}"
+                                             class="img-fluid p-3 {% cycle 'primary-img' 'hover-image' %}"/>
+                                    {% endthumbnail %}
+                                {% endif %}
+                            {% endfor %}
+                        </a>
+                    {% endif %}
+                {% endwith %}
+{#                    <span class="new-tag badge badge-warning">New</span>#}
+            {% endblock %}
+
+            <div class="product-info p-3">
+                <!-- Content -->
+                {% block product_title %}
+                    <h2 class="tittle">
+                        <a href="{{ product.get_absolute_url }}"
+                           title="{{ product.get_title }}">{{ product.get_title }}</a>
+                    </h2>
+                {% endblock %}
+                <!-- Reviews -->
+
+                {% block product_review %}
+                    {% iffeature "reviews" %}
+                        <p class="rev mb-0 star-rating {{ product.rating|as_stars }}">
+                            <span>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </span>
+                        </p>
+                    {% endiffeature %}
+                {% endblock %}
+                <div class="price-cart-block d-block position-relative w-100">
+                    <div class="d-flex align-items-center">
+                        {% block product_price %}
+                            <div class="price float-left d-inline-block w-100">
+                                {% include "catalogue/partials/stock_record.html" %}
+                            </div><!-- End .price-box -->
+                        {% endblock %}
+                        <div class="cart-block">
+                            {% include "catalogue/partials/add_to_basket_form_compact.html" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if not product.is_parent %}
+                <div class="group-btn-hover w-100 px-3">
+                    {% include "catalogue/partials/add_to_wishlist_from_product.html" %}
+                </div>
+            {% endif %}
+        </article>
+    </div>
+{% endblock %}

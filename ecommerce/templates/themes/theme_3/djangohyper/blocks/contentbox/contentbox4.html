@@ -1,0 +1,22 @@
+<div class="contentBoxWrap contentBox-icon" id="{{ obj.id }}">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="image-wrap image-top-padding">
+                <img src="{{ obj.settings.image.url }}" class="img-fluid" />
+             </div>
+        </div>
+        <div class="col-md-9">
+            {% if obj.settings.title %}
+                <div class="title">
+                    <h2>{{ obj.settings.title }}</h2>
+                </div>
+            {% endif %}
+
+            {% if obj.settings.description %}
+            <div class="desc">
+                {{ obj.settings.description|safe }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

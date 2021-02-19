@@ -1,0 +1,41 @@
+{% load product_tags %}
+
+<div id="{{ obj.id }}">
+    <div class="flex-row row pb-3">
+        <div class="offer_info">
+            <!-- <h4 class="mt-4 ml-4">{{ offer.name }}</h4> -->
+            {% if obj.settings.offer_title%}
+            <h4 class="mt-4 ml-4">{{ obj.settings.offer_title }}</h4>
+            {% endif %}
+            {% if obj.settings.offer_details %}
+            <h5 class="text-right text-uppercase ml-4">{{ obj.settings.offer_details }}</h5>
+            {% elif upsell_message %}
+            <h5 class="text-right text-uppercase ml-4">{{ upsell_message }}</h5>
+            {% endif%}
+        </div>
+        <div class="col-md-12 col-lg-12">
+            <div class="mt-0 offer_slide">
+                {% if obj.settings.action_url %}
+                <div class="more_detail_offer text-right mr-3">
+                    <a class="text-uppercase" href="{{ obj.settings.action_url }}">view more...</a>
+                </div>
+                {%endif%}
+                <div class="row no-gutters owl-carousel">
+                    {% for product in offer.products %}
+                        {% if forloop.counter0 < 14 %}
+                            <div class="product mb-4">
+                                {% render_product product %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    .offer_slide .owl-carousel.owl-loaded {
+        height: 335px !important;
+    }
+</style>

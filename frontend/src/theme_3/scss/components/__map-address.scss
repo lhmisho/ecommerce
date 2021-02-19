@@ -1,0 +1,108 @@
+// address block css start here
+
+.loc-container{
+
+    padding: 30px 0;
+    .loc-wrapper{
+        padding-bottom: 20px;
+        .card-title{
+            font-size: 8px !important;
+            padding: 0px 10px;
+        } 
+        .card p{
+            padding: 2px 15px;
+            font-size: 15px;
+            margin: 0;
+
+            strong{
+                color: #27509b;
+            }
+        }
+        .card-map {
+            padding: 10px 15px;
+            background: #fff;
+        }
+        
+        .p-position{
+            position: relative;
+        
+        }
+
+    }
+    
+}
+
+
+/* Custom, iPhone Retina */ 
+@media screen and (max-width: 320px){
+    .card-map iframe{
+        width: 258px !important;
+    }
+}
+
+// iphone x reponsive
+@media screen and (max-width: 375px) and (min-width: 361px) {
+    .card-map iframe{
+        width: 313px !important;    
+    }
+}
+
+@media screen and (max-width: 414px) and (min-width: 376px) {
+
+    .card-map iframe{
+        width: 352px;    
+    }
+}
+
+// lg optimux l70
+@media screen and (max-width: 640px) and (min-width:384px){
+
+    .card-map iframe{
+        width: 320px;    
+    }
+}
+
+// galaxy series
+@media screen and (max-width: 360px){
+    .card-map iframe{
+        width: 298px;    
+    }
+}
+
+@media screen and (min-width: 414px) and (max-width:846px){
+
+    .card-map iframe{
+        width: 350px;    
+    }
+}
+
+// ipad
+@media (min-width:768px) and (max-width: 1023px){
+    .card-map iframe{
+        width: 177px !important;
+    }
+    .loc-container .loc-wrapper .card p{
+        font-size: 12px;
+        margin: 0;
+    }
+    .loc-container .loc-wrapper .card-title{
+        font-size: 7px !important;
+    }
+    
+}
+
+// ipad pro
+@media (min-width:1024px) and (max-width: 1365px){
+    .card-map iframe{
+        width: 258px;
+    }
+
+}
+
+// pixel 2
+@media (min-width:411px) and (max-width: 731px){
+    .card-map iframe{
+        width: 348px;
+    }
+
+}

@@ -1,0 +1,117 @@
+// contentbox 1 title with image and button
+.action-help{
+    .text-wrap{
+        min-height: 120px;
+    }
+    .title{
+        h2{
+            font-size: 22px;
+            font-family: $body-font-family;
+            text-transform: capitalize;
+        }
+        
+    }
+    .desc{
+        p{
+            font-size:17px;
+            color: $dark-color;
+        }
+    }
+}
+
+//contentbox 2 image with downloadable link
+
+
+.image-title-download{
+        .custom-card {
+            padding:2.30rem;
+
+            .custom-button{
+                padding-left:12px;
+                i{
+                    padding-left:3px;
+                }
+            }
+            .title{
+                padding-bottom: 1.5rem;
+                padding-top: 0.7rem;
+                h4{
+                    font-family: $body-font-family;
+                    font-weight: 700;
+                }
+                a{
+                    color: $dark-color;
+                }
+                &:hover{
+                    color: $dark-color;
+                }
+                &:active{
+
+                }
+            }
+        }
+}
+//disable footer forced color
+.image-title-download .custom-card .title a:active{
+    color: $dark-color !important;
+}
+
+@media (min-width: 320px) and (max-width: 568px){
+    .image-title-download .custom-card .custom-button{
+      a{
+          font-size: 13px;
+      }
+    }
+}
+@media (min-width: 1024px) and (max-width: 1366px){
+    .image-title-download .custom-card .custom-button{
+      a{
+          font-size: 12px;
+      }
+    }
+
+}
+//end of contentbox 2 css
+
+
+// contentbox4 css
+
+.contentBox-icon{
+    .image-top-padding{
+        margin-top: 1.5rem!important;
+    }
+    .image-wrap{
+        img{
+            float: right;
+        }
+    }
+}
+
+@media (min-width:320px) and (max-width: 568px){
+    .contentBox-icon .image-wrap{
+        text-align: center;
+        padding: 5px 5px;
+    }
+    .contentBox-icon .image-wrap img{
+        float: none !important;
+    }
+    .contentBox-icon{
+        .title{
+            text-align: center;
+            padding-bottom: 10px;
+        }
+        .desc {
+            text-align: center;
+        }
+    }
+
+
+}
+
+@media (min-width: 768px) and (max-width: 1024px){
+    .contentBox-icon{
+        .image-top-padding{
+            margin-top: 2.5rem!important;
+        }
+    }
+}

@@ -1,0 +1,48 @@
+{% load product_tags widget_tweaks %}
+<div id="{{ obj.id }}" class="border rounded bg--custom feature-category-product
+my-4">
+    <div class="row pt-4 pl-4 pr-4">
+        <div class="col-md-12 col-sm-12">
+            <h5><a class="category_name_link" href="{{ category.get_absolute_url }}">{{ category.name }}</a></h5>
+            {% if obj.settings.image.url %}
+                <a class="feature_category_banner" href="{{ category.get_absolute_url }}">
+                    <div style="background-image: url({{ obj.settings.image.url }})"
+                         class="feature_category_banner"></div>
+                </a>
+            {% endif %}
+            <div class="product-filtering-section mt-3">
+                <form class="ajax-filter-form" data-viewport="pg-{{ obj.id }}"
+                      data-url="{{ category.get_absolute_url }}">
+                    <div class="d-flex flex-row align-items-end" id="parent">
+                        {% for field in filter_form %}
+                            <input type="hidden" name="per_page" value="8"/>
+                            <div class="flex-grow-1 mr-2">
+                                {{ field.errors }}
+                                {{ field.label_tag }}
+                                {% render_field field class="form-control" %}
+                                {% if field.help_text %}
+                                    <p class="help">{{ field.help_text|safe }}</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="filter-button">
+                            <button type="submit" class="btn primary-btn">Filter</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="pg-{{ obj.id }} feature-category-block mt-3 product_slide">
+                {#                 <a class="details" href="{{ category.get_absolute_url }}">view More</a>#}
+                <div class="row no-gutters owl-carousel">
+                    {% for product in products %}
+                        {% if forloop.counter0 < 8 %}
+                            <div class="product mb-4">
+                                {% render_product product %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="contentBoxWrap call-to-action-section" id="{{ obj.id }}">
+        <div class="call-to-action-content">
+            <div class="action-btn">
+                {% if obj.settings.actionUrl %}
+                    <a href="{{ obj.settings.actionUrl }}" class="btn secondary-btn btn-large">
+                        {{ obj.settings.actionTitle }}  </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    

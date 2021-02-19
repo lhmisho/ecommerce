@@ -1,0 +1,213 @@
+{% extends "layout_2_col.html" %}
+
+{% load history_tags %}
+{% load currency_filters %}
+{% load reviews_tags %}
+{% load staticfiles %}
+{% load product_tags %}
+{% load display_tags %}
+{% load i18n %}
+{% load purchase_info_tags %}
+{% load category_tags %}
+{% load thumbnail %}
+
+{% load hyper_tags %}
+
+{% block title %}
+    {{ product.title }} | {{ block.super }}
+{% endblock %}
+
+{% block description %}
+    {{ product.description|default:""|striptags }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0 bg-transparent">
+            <li class="breadcrumb-item">
+                <a href="{{ homepage_url }}">{% trans "Home" %}</a>
+            </li>
+            {% with category=product.categories.all.0 %}
+                {% for c in category.get_ancestors_and_self %}
+                    <li class="breadcrumb-item">
+                        <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                    </li>
+                {% endfor %}
+                <li class="breadcrumb-item active">{{ product.title }}</li>
+
+                {% get_back_button as backbutton %}
+                {% if backbutton %}
+                    <li class="pull-right">
+                        <a href="{{ backbutton.url }}">
+                            <i class="icon-arrow-left"></i> {{ backbutton.title }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endwith %}
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+
+    <div class="product-content-single">
+        <div class="d-flex position-relative details-content-wrap">
+            {% if product.banner_image %}
+                <div class="background-image-wraper" style="background: url({{ product.banner_image.url }})no-repeat fixed 50% 0 / cover; opacity: 1;"></div>
+            {% endif %}
+            <div class="container">
+                <div class="row no-gutters justify-content-center mt-4 mb-4">
+                    <div class="col-md-4 col-sm-12">
+                        <div id="sticky" class="fixed-item product-details-info d-block bg-white">
+                            {% block product_gallery %}
+                                {% include "catalogue/partials/gallery.html" %}
+                            {% endblock %}
+                            <div class="bg--custom product-action-info">
+                                {% iffeature "reviews" %}
+                                    {% include "catalogue/reviews/partials/review_stars.html" %}
+                                {% endiffeature %}
+                                {% block product_stock_record %}
+                                    <div class="text-right px-4 stock-record">{% include "catalogue/partials/stock_record.html" with verbose=1 %}</div>
+                                {% endblock %}
+                                {% block product_basket_form %}
+                                    {% include "catalogue/partials/add_to_basket_form.html" %}
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 bg--custom p-5">
+                        <div class="product-details-info">
+                            {% block product_main %}
+                                {% if user.is_authenticated and user.is_staff %}
+                                    <a class="text-right" href="{% url 'dashboard:catalogue-product' pk=product.id %}">
+                                        <small><i class="icon-edit"></i> {% trans "Edit this product" %}</small>
+                                    </a>
+                                {% endif %}
+                                <h1>{{ product.get_title }}</h1>
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-custom-details details-2">
+            {% block product_description %}
+                {% if product.description %}
+                    {% hyperfield_render product.description %}
+                {% endif %}
+            {% endblock %}
+        </div>
+    </div>
+
+
+    <div id="customer-review" class="primary-bg pt-5 pb-5">
+        <div class="container">
+            <div class="row">
+                {% iffeature "reviews" %}
+                    {% block product_review %}
+                        <div class="col-md-12">
+                            <div id="reviews" class="sub-header">
+                                <h4>{% trans "Customer Reviews" %}</h4>
+                            </div>
+
+                            {% if product.num_approved_reviews == 0 %}
+                                <p class="review-links">
+                                    {% if product|is_review_permitted:user %}
+                                        {% url 'catalogue:reviews-add' product_slug=product.slug product_pk=product.id as add_review_url %}
+                                        {% blocktrans %}This product does not have any reviews yet -
+                                            <a href="{{ add_review_url }}#addreview" class="secondary-color">Be the
+                                                first to write
+                                                one</a>.
+                                        {% endblocktrans %}
+                                    {% else %}
+                                        {% trans "This product does not have any reviews yet" %}.
+                                    {% endif %}
+                                </p>
+                            {% else %}
+                                <ol class="list-unstyled review-list">
+                                    {% for review in product.reviews.approved.all|slice:":4" %}
+                                        <li>
+                                            {% include 'catalogue/partials/review.html' %}
+                                        </li>
+                                    {% endfor %}
+                                </ol>
+                            {% endif %}
+                            {% if product.num_approved_reviews > 3 %}
+                                <a href="{% url 'catalogue:reviews-list' product_slug=product.slug product_pk=product.id %}"
+                                   class="btn secondary-btn mb-4">{% trans "See all reviews" %}</a>
+                            {% endif %}
+                        </div>
+                    {% endblock product_review %}
+                {% endiffeature %}
+            </div>
+        </div>
+    </div>
+
+    <div class="bg--custom py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    {% with recommended_products=product.recommended_products.all|slice:":4" %}
+                        {% if recommended_products %}
+                            <div class="sub-header mb-4">
+                                <h4>{% trans "Recommended items" %}</h4>
+                            </div>
+                            <ul class="row">
+                                {% for product in recommended_products %}
+                                    <li class="col-md-3 col-lg-3">
+                                        {% render_product product %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endwith %}
+
+                    {% recently_viewed_products current_product=product %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block extrascripts %}
+    {{ block.super }}
+    <script>
+        //    sticky sidebar
+
+        $(function () { // document ready
+            if ($('#sticky').length) { // make sure "#sticky" element exists
+                var el = $('#sticky');
+                var stickyTop = $('#sticky').offset().top; // returns number
+                var stickyHeight = $('#sticky').height();
+
+                $(window).scroll(function () { // scroll event
+                    var limit = $('#customer-review').offset().top - stickyHeight - 100;
+
+                    var windowTop = $(window).scrollTop(); // returns number
+
+                    if (stickyTop < windowTop) {
+                        el.css({
+                            position: 'fixed',
+                            top: 40,
+                        });
+                    } else {
+                        el.css('position', 'static');
+                    }
+
+                    if (limit < windowTop) {
+                        var diff = limit - windowTop;
+                        el.css({
+                            top: diff
+                        });
+                    }
+                });
+            }
+        });
+
+    </script>
+{% endblock %}

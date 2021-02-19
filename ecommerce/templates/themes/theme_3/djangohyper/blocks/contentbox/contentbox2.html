@@ -1,0 +1,25 @@
+<div class="contentBoxWrap image-title-download" id="{{ obj.id }}">
+    <div class="row">
+        <div class="col-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-body custom-card">
+                    {%if obj.settings.image.url%}
+                    <div class="card-img">
+                        <img src="{{ obj.settings.image.url}}" class="img-fluid mx-sm-auto {% if obj.general.classes %} {{ obj.general.classes }} {% endif %}" alt="{{obj.settings.title}}">
+                    </div>
+                    {%endif%}
+                    {% if obj.settings.title %}
+                    <div class="title">
+                       <h4> <a href="{{obj.settings.actionUrl}}">{{obj.settings.title }}</a></h4>
+                    </div>
+                    {% endif %}
+                    {%if obj.settings.actionUrl%}
+                    <div class="custom-button">
+                        <a class="btn primary-btn" href="{%if obj.settings.actionUrl%} {{obj.settings.actionUrl}} {% else %}#{%endif%}"> {{ obj.settings.actionTitle}}  <i class="fa fa-download"></i></a>
+                    </div>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<div id="{{ obj.id }}" class="{{ obj.general.classes }} image-content-slider-wrap">
+    <div class="owl-carousel owl-theme hero-slider-1 dot-indicator-right">
+        {% for slider in obj.settings.items %}
+            <div class="item">
+                <div class="slider-content-wrap">
+                    {% if slider.image %}
+                        <div class="slider-image my-3">
+                            <img src="{{ slider.image.url }}" alt="{{ slider.title }}" class="img-fluid">
+                        </div>
+                    {% else %}
+                        {% if slider.videoId %}
+                            <div class="embed-responsive embed-responsive-16by9 my-3">
+                                <iframe class="embed-responsive-item" width="100%" height="auto" src="https://www.youtube.com/embed/{{ slider.videoId }}?autoplay=1&loop=1&mute=1&playlist={{ slider.videoId }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    <h3>{{ slider.title }}</h3>
+                    <p>{{ slider.description|safe }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
